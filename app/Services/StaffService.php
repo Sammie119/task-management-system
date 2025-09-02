@@ -31,4 +31,33 @@ class StaffService
 
         return redirect(route('staff', absolute: false))->with('success', 'Staff Created Successfully!!!');
     }
+
+    public function update(array $data)
+    {
+       Staff::find($data['id'])->update([
+            'first_name' => $data['first_name'],
+            'last_name' => $data['last_name'],
+            'email' => $data['email'],
+            'date_of_birth' => $data['date_of_birth'],
+            'gender' => $data['gender'],
+            'phone' => $data['phone'],
+            'address' => $data['address'],
+            'position' => $data['position'],
+            'active_flag' => $data['active_flag'] ?? 0,
+            'updated_by' =>  get_logged_in_user_id(),
+        ]);
+
+        return redirect(route('staff', absolute: false))->with('success', 'Staff Updated Successfully!!!');
+    }
+
+    public function destroy($id)
+    {
+        $staff = Staff::find($id);
+
+        if(!$staff)
+            return redirect(route('staff', absolute: false))->with('error', 'Staff Not Found');;
+
+        $staff->delete();
+        return redirect(route('staff', absolute: false))->with('success', 'Staff Deleted Successfully!!!');
+    }
 }
