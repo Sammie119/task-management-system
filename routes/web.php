@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\StaffController;
+use App\Http\Controllers\TaskController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -37,6 +38,24 @@ Route::middleware('auth')->group(function () {
             Route::put('/staff', 'update')->name('staff');
             Route::post('/destroy_staff', 'destroy')->name('destroy_staff');
         });
+
+
     });
 
+    Route::prefix('employee')->group(function () {
+        Route::controller(TaskController::class)->group(function () {
+            Route::get('/task', 'index')->name('task');
+            Route::post('/task', 'store')->name('task');
+            Route::put('/task', 'update')->name('task');
+            Route::post('/destroy_task', 'destroy')->name('destroy_task');
+        });
+
+    });
+
+        Route::get('/employee/task', function () {
+        $tasks = App\Models\Task::all();
+        return view('task.index', compact('tasks'));
 });
+
+
+    });

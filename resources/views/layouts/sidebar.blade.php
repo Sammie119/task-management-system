@@ -16,6 +16,13 @@
             icon="bi bi-people"
         />
 
+        <x-menu-main
+            title="Task"
+            route="task"
+            type="single"
+            icon="bi bi-list-task"
+        />
+
         <li class="nav-heading">Menus</li>
 
         <x-menu-main

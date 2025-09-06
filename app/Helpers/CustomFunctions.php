@@ -2,6 +2,7 @@
 
 use App\Models\Dropdown;
 use App\Models\Staff;
+use App\Models\Task;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 
@@ -70,6 +71,17 @@ if (!function_exists("get_staff_name")) {
         $staff = Staff::find($id);
         if($staff){
             return $staff->first_name.' '.$staff->last_name;
+        }
+        return null;
+    }
+}
+
+if (!function_exists("get_task_name")) {
+    function get_task_name($id): string|null
+    {
+        $task = Task::find($id);
+        if($task){
+            return $task->name;
         }
         return null;
     }
