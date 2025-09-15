@@ -30,23 +30,27 @@
         </div>
 
          <div class="mb-3 col-6">
-            <x-input-text
-                type="text"
-                name="status"
-                label="Status"
-                value="{{ isset($data) ? $data->status : '' }}"
-                required="true"
-            />
+             <x-input-select
+                 :options="['Pending','In-Progress', 'Completed']"
+                 :selected="isset($data) ? $data->status : 'Pending'"
+                 name="status"
+                 :values="['Pending','In-Progress', 'Completed']"
+                 :type="1"
+                 required="true"
+                 label="Status"
+             />
         </div>
 
          <div class="mb-3 col-6">
-            <x-input-text
-                type="text"
-                name="priority"
-                label="Priority"
-                value="{{ isset($data) ? $data->priority : '' }}"
-                required="true"
-            />
+             <x-input-select
+                 :options="['High','Medium', 'Low']"
+                 :selected="isset($data) ? $data->priority : 'Low'"
+                 name="priority"
+                 :values="['High','Medium', 'Low']"
+                 :type="1"
+                 required="true"
+                 label="Priority"
+             />
         </div>
 
          <div class="mb-3 col-6">

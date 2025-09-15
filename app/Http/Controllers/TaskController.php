@@ -8,18 +8,18 @@ use Illuminate\Http\Request;
 
 class TaskController extends Controller
 {
-    private TaskService $TaskService;
+    private TaskService $taskService;
 
-    public function __construct(TaskService $TaskService)
+    public function __construct(TaskService $taskService)
     {
-        $this->TaskService = $TaskService;
+        $this->taskService = $taskService;
     }
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-         return $this->TaskService->index();
+         return $this->taskService->index();
     }
 
     /**
@@ -37,7 +37,7 @@ class TaskController extends Controller
 
         ]);
 
-        return $this->TaskService->store($request->all());
+        return $this->taskService->store($request->all());
     }
 
     /**
@@ -58,7 +58,7 @@ class TaskController extends Controller
 
 
 
-        return $this->TaskService->update($request->all());
+        return $this->taskService->update($request->all());
     }
 
     /**
@@ -66,6 +66,6 @@ class TaskController extends Controller
      */
     public function destroy(Request $request)
     {
-        return $this->TaskService->destroy($request->id);
+        return $this->taskService->destroy($request->id);
     }
 }
