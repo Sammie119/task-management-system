@@ -3,6 +3,7 @@
 use App\Models\Dropdown;
 use App\Models\Staff;
 use App\Models\Task;
+use App\Models\subTask;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 
@@ -10,6 +11,12 @@ if (!function_exists("get_logged_in_user_id")) {
     function get_logged_in_user_id(): int
     {
         return Auth::user()->id;
+    }
+}
+if (!function_exists("get_logged_in_sub_task_id")) {
+    function get_logged_in_sub_task_id(): int
+    {
+        return Auth::user()->sub_task_id ?? 0;
     }
 }
 
@@ -82,6 +89,36 @@ if (!function_exists("get_task_name")) {
         $task = Task::find($id);
         if($task){
             return $task->name;
+        }
+        return null;
+    }
+}
+if (!function_exists("get_sub_task_name")) {
+    function get_sub_task_name($id): string|null
+    {
+        $sub_task = subTask::find($id);
+        if($sub_task){
+            return $sub_task->name;
+        }
+        return null;
+    }
+}
+if (!function_exists("get_sub_task_Id")) {
+    function get_sub_task_Id($id): string|null
+    {
+        $sub_task = subTask::find($id);
+        if($sub_task){
+            return $sub_task->id;
+        }
+        return null;
+    }
+}
+if (!function_exists("get_user_Id")) {
+    function get_user_Id($id): string|null
+    {
+        $sub_task = subTask::find($id);
+        if($sub_task){
+            return $sub_task->id;
         }
         return null;
     }

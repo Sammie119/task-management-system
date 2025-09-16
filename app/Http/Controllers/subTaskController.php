@@ -2,24 +2,24 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Task;
-use App\Services\TaskService;
+use App\Models\subTask;
+use App\Services\SubTaskService;
 use Illuminate\Http\Request;
 
-class TaskController extends Controller
+class subTaskController extends Controller
 {
-    private TaskService $taskService;
+    private SubTaskService $sub_taskService;
 
-    public function __construct(TaskService $taskService)
+    public function __construct(SubTaskService $sub_taskService)
     {
-        $this->taskService = $taskService;
+        $this->sub_taskService = $sub_taskService;
     }
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-         return $this->taskService->index();
+         return $this->sub_taskService->index();
     }
 
     /**
@@ -28,6 +28,8 @@ class TaskController extends Controller
     public function store(Request $request)
     {
         $request->validate([
+            'user_id'=> '',
+            'task_id'=> '',
             'name' => 'required',
             'description' => '',
             'status' => 'required',
@@ -37,7 +39,7 @@ class TaskController extends Controller
 
         ]);
 
-        return $this->taskService->store($request->all());
+        return $this->sub_taskService->store($request->all());
     }
 
     /**
@@ -46,18 +48,19 @@ class TaskController extends Controller
     public function update(Request $request)
     {
         $request->validate([
+            'user_id'=> '',
+            'task_id'=> '',
             'name' => 'required',
             'description' => '',
             'status' => 'required',
             'priority' => 'required',
             'start_date' => 'required',
             'due_date' => 'required',
-
         ]);
 
 
 
-        return $this->taskService->update($request->all());
+        return $this->sub_taskService->update($request->all());
     }
 
     /**
@@ -65,6 +68,6 @@ class TaskController extends Controller
      */
     public function destroy(Request $request)
     {
-        return $this->taskService->destroy($request->id);
+        return $this->sub_taskService->destroy($request->id);
     }
 }

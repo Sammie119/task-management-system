@@ -2,7 +2,7 @@
     $position = \App\Models\Dropdown::where('category_id', 3)->orderBy('name')->get();
 @endphp
 
-<form method="POST" action="{{ route('task') }}">
+<form method="POST" action="{{ route('sub_task') }}">
     @csrf
     @isset($data)
         @method('put')
@@ -10,6 +10,9 @@
     @endisset
 
     <div class="px-4 row">
+        <div class="mb-3 col-12">
+
+        </div>
         <div class="mb-3 col-12">
             <x-input-text
                 type="text"

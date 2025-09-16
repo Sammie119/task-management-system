@@ -1,11 +1,11 @@
 @extends('layouts.app')
 
-@section('title', "Task Management System - task")
+@section('title', "Task Management System - sub_task")
 
 @section('content')
     <main id="main" class="main">
 
-        <x-breadcrumb name="Tasks" />
+        <x-breadcrumb name="Sub Tasks" />
 
         <section class="section">
             <div class="row">
@@ -14,17 +14,17 @@
                     <div class="card">
                         <div class="card-body">
                             <div class="d-flex justify-content-between align-items-center">
-                                <h5 class="card-title">Tasks</h5>
+                                <h5 class="card-title">Sub Tasks</h5>
                                 <x-button
                                     type="button"
                                     icon="bi bi-plus-lg"
                                     class="btn-primary"
-                                    title="Add New Task"
-                                    name="Add Tasks"
+                                    title="Add New SubTask"
+                                    name="Add SubTasks"
                                     data-bs-toggle="modal"
                                     data-bs-target="#createModal"
-                                    data-bs-title="Create New Tasks"
-                                    data-bs-url="task.create"
+                                    data-bs-title="Create New SubTasks"
+                                    data-bs-url="sub_task.create"
                                     data-bs-size="modal-lg"
                                 />
                             </div>
@@ -38,6 +38,8 @@
                                 <thead>
                                     <tr>
                                         <th scope="col">#</th>
+                                        <th scope="col">Task ID</th>
+                                        <th scope="col">User ID</th>
                                         <th scope="col">Name</th>
                                         <th scope="col">Description</th>
                                         <th scope="col">Status</th>
@@ -49,11 +51,12 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @if(isset($tasks) && $tasks->count() > 0)
-                                    @forelse($tasks as $key => $st)
+                                    @forelse($sub_tasks as $key => $st)
                                         <tr>
                                             <th scope="row">{{ ++$key }}</th>
-                                            <td>{{ get_task_name($st->id) }}</td>
+                                            <td>{{ $st->user_id }}</td>
+                                            <td>{{ $st->task_id }}</td>
+                                            <td>{{ get_sub_task_name($st->id) }}</td>
                                             <td>{{ $st->description }}</td>
                                             <td>{{ $st->status }}</td>
                                             <td>{{ $st->priority }}</td>
@@ -65,30 +68,30 @@
                                                     type="button"
                                                     icon="bi bi-pencil-square"
                                                     class="btn-primary btn-sm"
-                                                    title="Edit Task"
+                                                    title="Edit SubTask"
                                                     name=""
                                                     data-bs-toggle="modal"
                                                     data-bs-target="#createModal"
-                                                    data-bs-title="Edit Task"
-                                                    data-bs-url="task.create/{{ $st }}"
+                                                    data-bs-title="Edit SubTask"
+                                                    data-bs-url="sub_task.create/{{ $st }}"
                                                     data-bs-size="modal-lg"
                                                 />
                                                 <x-button
                                                     type="button"
                                                     icon="bi bi-trash-fill"
                                                     class="btn-danger btn-sm"
-                                                    title="Delete Task"
+                                                    title="Delete SubTask"
                                                     name=""
                                                     data-bs-toggle="modal"
                                                     data-bs-target="#createModal"
-                                                    data-bs-title="Delete Task"
-                                                    data-bs-url="task.delete/{{ $st }}"
+                                                    data-bs-title="Delete SubTask"
+                                                    data-bs-url="sub_task.delete/{{ $st }}"
                                                     data-bs-size=""
                                                 />
                                             </td>
                                         </tr>
                                     @empty
-                                    @endif
+
                                     @endforelse
 
                                 </tbody>

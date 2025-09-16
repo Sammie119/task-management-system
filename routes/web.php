@@ -3,6 +3,7 @@
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\StaffController;
 use App\Http\Controllers\TaskController;
+use App\Http\Controllers\subTaskController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -55,6 +56,20 @@ Route::middleware('auth')->group(function () {
         Route::get('/employee/task', function () {
         $tasks = App\Models\Task::all();
         return view('task.index', compact('tasks'));
+});
+    Route::prefix('employee')->group(function () {
+        Route::controller(subTaskController::class)->group(function () {
+            Route::get('/sub_task', 'index')->name('sub_task');
+            Route::post('/sub_task', 'store')->name('sub_task');
+            Route::put('/sub_task', 'update')->name('sub_task');
+            Route::post('/destroy_sub_task', 'destroy')->name('destroy_sub_task');
+        });
+
+    });
+
+        Route::get('/employee/sub_task', function () {
+        $sub_tasks = App\Models\subTask::all();
+        return view('sub_task.index', compact('sub_tasks'));
 });
 
 

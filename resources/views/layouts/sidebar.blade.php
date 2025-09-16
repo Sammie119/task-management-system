@@ -23,6 +23,13 @@
             icon="bi bi-list-task"
         />
 
+        <x-menu-main
+            title="Sub Task"
+            route="sub_task"
+            type="single"
+            icon="bi bi-check2-square"
+        />
+
         <li class="nav-heading">Menus</li>
 
         <x-menu-main
