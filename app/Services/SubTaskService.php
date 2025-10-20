@@ -4,6 +4,7 @@ namespace App\Services;
 
 use App\Models\subTask;
 
+
 class SubTaskService
 {
     public function index()
@@ -14,10 +15,12 @@ class SubTaskService
 
     public function store(array $data)
     {
-        subTask::create([
-            'task_id' => get_logged_in_sub_task_id(),
-            'user_id' =>get_logged_in_user_id(),
-            'name' => $data['name'],
+        subTask::create(attributes: [
+            'task_id' => $data['task_id'],
+            'user_id' => get_logged_in_user_id(),
+            'task_name' => $data['task_name'],
+            'sub_task_name' => $data['sub_task_name'],
+            'assigned_name' => $data['assigned_name'],
             'description' => $data['description'],
             'status' => $data['status'],
             'priority' => $data['priority'],
@@ -35,18 +38,20 @@ class SubTaskService
     public function update(array $data)
     {
        subTask::find($data['id'])->update([
-           'task_id' => get_logged_in_sub_task_id(),
-            'user_id' =>get_logged_in_user_id(),
-            'name' => $data['name'],
-            'description' => $data['description'],
-            'status' => $data['status'],
-            'priority' => $data['priority'],
-            'start_date' => $data['start_date'],
-            'due_date' => $data['due_date'],
-            'active_flag' => $data['active_flag'] ?? 0,
-            'area_id' => get_logged_in_area_id(),
-            'created_by' => get_logged_in_user_id(),
-            'updated_by' =>  get_logged_in_user_id(),
+        'task_id' => $data['task_id'],
+        'user_id' => get_logged_in_user_id(),
+        'task_name' => $data['task_name'],
+        'sub_task_name' => $data['sub_task_name'],
+        'assigned_name' => $data['assigned_name'],
+        'description' => $data['description'],
+        'status' => $data['status'],
+        'priority' => $data['priority'],
+        'start_date' => $data['start_date'],
+        'due_date' => $data['due_date'],
+        'active_flag' => $data['active_flag'] ?? 0,
+        'area_id' => get_logged_in_area_id(),
+        'created_by' => get_logged_in_user_id(),
+        'updated_by' =>  get_logged_in_user_id(),
         ]);
 
         return redirect(route('sub_task', absolute: false))->with('success', 'SubTask Updated Successfully!!!');

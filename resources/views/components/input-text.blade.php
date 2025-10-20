@@ -7,6 +7,7 @@
             name="{{ $name }}"
             id="{{ $name }}"
             rows="{{ $row }}"
+            :type="1"
             {{ $required ? 'required' : '' }}
         >{{ $slot }}</textarea>
         <label for="{{ $name }}">{{ $label }} <span style="color: red">{{ $required ? '*' : '' }}</span></label>

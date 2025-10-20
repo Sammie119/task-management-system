@@ -4,8 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-return new class extends Migration
-{
+return new class extends Migration {
     /**
      * Run the migrations.
      */
@@ -15,8 +14,8 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->longText('description')->nullable();
-            $table->enum('status', ['Pending','In-Progress', 'Completed'])->default('Pending');
-            $table->enum('priority', ['High','Medium', 'Low'])->default('Low');
+            $table->enum('status', ['Pending', 'In-Progress', 'Completed'])->default('Pending');
+            $table->enum('priority', ['High', 'Medium', 'Low'])->default('Low');
             $table->date('start_date')->nullable();
             $table->date('due_date')->nullable();
             $table->integer('area_id');
@@ -31,12 +30,14 @@ return new class extends Migration
 
         Schema::create('sub_tasks', function (Blueprint $table) {
             $table->id();
-            $table->integer('task_id')->constrained('task', 'task_id')->default(1);
-            $table->integer('user_id')->constrained('user', 'user_id')->default(1);
-            $table->string('name');
+            $table->unsignedBigInteger('task_id')->constrained('tasks', 'task_id');
+            $table->unsignedBigInteger('user_id')->constrained('users', 'user_id');
+            $table->string('task_name');
+            $table->string('sub_task_name');
+            $table->string('assigned_name');
             $table->longText('description')->nullable();
-            $table->enum('status', ['Pending','In-Progress', 'Completed'])->default('Pending');
-            $table->enum('priority', ['High','Medium', 'Low'])->default('Low');
+            $table->enum('status', ['Pending', 'In-Progress', 'Completed'])->default('Pending');
+            $table->enum('priority', ['High', 'Medium', 'Low'])->default('Low');
             $table->date('start_date')->nullable();
             $table->date('due_date')->nullable();
             $table->integer('area_id');

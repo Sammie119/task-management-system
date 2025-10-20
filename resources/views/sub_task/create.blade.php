@@ -1,5 +1,7 @@
 @php
     $position = \App\Models\Dropdown::where('category_id', 3)->orderBy('name')->get();
+    $tasks = \App\Models\Task::where('status', 'In-Progress')->orderBy('name')->get();
+    $users = \App\Models\User::orderBy('name')->get();
 @endphp
 
 <form method="POST" action="{{ route('sub_task') }}">
@@ -10,19 +12,35 @@
     @endisset
 
     <div class="px-4 row">
-        <div class="mb-3 col-12">
+        <div class="mb-3 col-6">
+            <x-input-select
+                name="task_id"
+                label="Task Name"
+                :options="$tasks"
+                :selected="isset($data) ? $data->task_id : ''"
+                required="true"
+            />
 
         </div>
-        <div class="mb-3 col-12">
+        <div class="mb-3 col-6">
             <x-input-text
                 type="text"
-                name="name"
-                label="Name"
-                value="{{ isset($data) ? $data->name : '' }}"
+                name="sub_task_name"
+                label="Sub Task Name"
+                value="{{ isset($data) ? $data->sub_task_name : '' }}"
                 required="true"
             />
         </div>
-         <div class="mb-3 col-12">
+        <div class="mb-3 col-6">
+            <x-input-select
+                name="user_id"
+                label="Assigned To"
+                :options="$users"
+                :selected="isset($data) ? $data->user_id : ''"
+                required="true"
+            />
+        </div>
+         <div class="mb-3 col-6">
             <x-input-text
                 type="textarea"
                 name="description"
@@ -34,10 +52,10 @@
 
          <div class="mb-3 col-6">
              <x-input-select
-                 :options="['Pending','In-Progress', 'Completed']"
+                 :options="['Pending', 'In-Progress', 'Completed']"
                  :selected="isset($data) ? $data->status : 'Pending'"
                  name="status"
-                 :values="['Pending','In-Progress', 'Completed']"
+                 :values="['Pending', 'In-Progress', 'Completed']"
                  :type="1"
                  required="true"
                  label="Status"
@@ -46,10 +64,10 @@
 
          <div class="mb-3 col-6">
              <x-input-select
-                 :options="['High','Medium', 'Low']"
+                 :options="['High', 'Medium', 'Low']"
                  :selected="isset($data) ? $data->priority : 'Low'"
                  name="priority"
-                 :values="['High','Medium', 'Low']"
+                 :values="['High', 'Medium', 'Low']"
                  :type="1"
                  required="true"
                  label="Priority"
@@ -80,7 +98,7 @@
 
 
     <div class="form-check form-switch mb-4" style="margin-left: 25px;">
-        <input class="form-check-input" type="checkbox" role="switch" name="active_flag" value="1" id="active_flag" {{ (isset($data) && $data->active_flag == 1) ? 'checked' : (empty($data) ? 'checked' : '' ) }}>
+        <input class="form-check-input" type="checkbox" role="switch" name="active_flag" value="1" id="active_flag" {{ (isset($data) && $data->active_flag == 1) ? 'checked' : (empty($data) ? 'checked' : '') }}>
         <label class="form-check-label" for="active_flag">Enable</label>
     </div>
 

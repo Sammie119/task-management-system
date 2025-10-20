@@ -38,9 +38,9 @@
                                 <thead>
                                     <tr>
                                         <th scope="col">#</th>
-                                        <th scope="col">Task ID</th>
                                         <th scope="col">User ID</th>
-                                        <th scope="col">Name</th>
+                                        <th scope="col">Sub Task Name</th>
+                                        <th scope="col">Task Name</th>
                                         <th scope="col">Description</th>
                                         <th scope="col">Status</th>
                                         <th scope="col">Priority</th>
@@ -55,8 +55,8 @@
                                         <tr>
                                             <th scope="row">{{ ++$key }}</th>
                                             <td>{{ $st->user_id }}</td>
-                                            <td>{{ $st->task_id }}</td>
                                             <td>{{ get_sub_task_name($st->id) }}</td>
+                                            <td>{{ $st->task_name }}</td>
                                             <td>{{ $st->description }}</td>
                                             <td>{{ $st->status }}</td>
                                             <td>{{ $st->priority }}</td>

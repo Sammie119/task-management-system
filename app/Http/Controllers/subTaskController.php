@@ -2,9 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\subTask;
+use App\Models\Task;
 use App\Services\SubTaskService;
 use Illuminate\Http\Request;
+use \App\Models\User;
 
 class subTaskController extends Controller
 {
@@ -14,12 +15,26 @@ class subTaskController extends Controller
     {
         $this->sub_taskService = $sub_taskService;
     }
+
+    //Fetch all Tasks
+    public function create()
+    {
+        $tasks = Task::where('status', 'In-Progress')->pluck('name', 'id');
+        $users = User::pluck('name', 'id');
+
+        return view('sub_task.create', compact('tasks', 'users'));
+
+    }
+
+
+
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-         return $this->sub_taskService->index();
+
+        return $this->sub_taskService->index();
     }
 
     /**
@@ -28,18 +43,32 @@ class subTaskController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'user_id'=> '',
-            'task_id'=> '',
-            'name' => 'required',
-            'description' => '',
-            'status' => 'required',
-            'priority' => 'required',
-            'start_date' => 'required',
-            'due_date' => 'required',
+            'task_id' => 'integer|exists:tasks,id',
+            'user_id' => 'integer|exists:users,id',
+            'sub_task_name' => 'required|string|max:255',
+            'description' => 'nullable|string',
+            'status' => 'required|string',
+            'priority' => 'required|string',
+            'start_date' => 'required|date',
+            'due_date' => 'required|date',
 
         ]);
 
-        return $this->sub_taskService->store($request->all());
+        // Fetch actual names
+        $task = Task::find($request->task_id);
+        $user = User::find($request->user_id);
+
+        // Merge into data
+        $data = $request->all();
+        $data['task_name'] = $task ? $task->name : null;
+        $data['assigned_name'] = $user ? $user->name : null;
+
+        if (!$user) {
+            return back()->with('error', 'Invalid user selected.');
+        }
+
+
+        return $this->sub_taskService->store($data);
     }
 
     /**
@@ -48,19 +77,30 @@ class subTaskController extends Controller
     public function update(Request $request)
     {
         $request->validate([
-            'user_id'=> '',
-            'task_id'=> '',
-            'name' => 'required',
-            'description' => '',
-            'status' => 'required',
-            'priority' => 'required',
-            'start_date' => 'required',
-            'due_date' => 'required',
+            'task_id' => 'integer|exists:tasks,id',
+            'user_id' => 'integer|exists:users,id',
+            'sub_task_name' => 'required|string|max:255',
+            'description' => 'nullable|string',
+            'status' => 'required|string',
+            'priority' => 'required|string',
+            'start_date' => 'required|date',
+            'due_date' => 'required|date',
         ]);
 
+        // Fetch actual names
+        $task = Task::find($request->task_id);
+        $user = User::find($request->user_id);
 
+        // Merge into data
+        $data = $request->all();
+        $data['task_name'] = $task ? $task->name : null;
+        $data['assigned_name'] = $user ? $user->name : null;
 
-        return $this->sub_taskService->update($request->all());
+        if (!$user) {
+            return back()->with('error', 'Invalid user selected.');
+        }
+
+        return $this->sub_taskService->update($data);
     }
 
     /**

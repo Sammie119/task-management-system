@@ -98,7 +98,7 @@ if (!function_exists("get_sub_task_name")) {
     {
         $sub_task = subTask::find($id);
         if($sub_task){
-            return $sub_task->name;
+            return $sub_task->sub_task_name;
         }
         return null;
     }
@@ -113,14 +113,13 @@ if (!function_exists("get_sub_task_Id")) {
         return null;
     }
 }
-if (!function_exists("get_user_Id")) {
-    function get_user_Id($id): string|null
-    {
-        $sub_task = subTask::find($id);
-        if($sub_task){
-            return $sub_task->id;
-        }
-        return null;
-    }
-}
-
+// if (!function_exists("get_user_Id")) {
+//     function get_user_Id($id): string|null
+//     {
+//         $sub_task = subTask::find($id);
+//         if($sub_task){
+//             return $sub_task->id;
+//         }
+//         return null;
+//     }
+// }
